@@ -36,8 +36,6 @@ def upload(request):
         # if not f.name.rsplit('.')[1] in ['dna', 'fasta']:
         # message.error(request, 'File type not supported.')
 
-        REs = [f'{str(e):<10s} { "blunt" if e.is_blunt() else e.elucidate()}' for e in REs]
-
         return render(request, 'result.html', {'REs': REs})
 
     else:

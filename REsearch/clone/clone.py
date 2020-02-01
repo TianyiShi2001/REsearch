@@ -1,9 +1,10 @@
-from Bio import SeqIO
-from Bio.Seq import Seq
+from Bio import Restriction, SeqIO
 from Bio.Alphabet.IUPAC import IUPACUnambiguousDNA
-from Bio.Restriction import RestrictionBatch
-from Bio.Restriction import Analysis
-from Bio import Restriction
+from Bio.Restriction import Analysis, RestrictionBatch
+from Bio.Seq import Seq
+
+suppliers = dict(B='Life Technologies', C='Minotech Biotechnology', E='Agilent Technologies', I='SibEnzyme Ltd.', J='Nippon Gene Co., Ltd.', K='Takara Bio Inc.', M='Roche Applied Science', N='New England Biolabs',
+                 O='Toyobo Biochemicals', Q='Molecular Biology Resources - CHIMERx', R='Promega Corporation', S='Sigma Chemical Corporation', V='Vivantis Technologies', X='EURx Ltd.', Y='SinaClon BioScience Co.')
 
 
 def read_seq(filename):
@@ -34,7 +35,22 @@ def REsearch(goi='', goiFile='', mcs='', mcsFile=''):
 
     # ana = Analysis(RestrictionBatch(list(REs)), mcs)
 
-    return sorted(REs, key=lambda e: result_mcs[e])
+    # REs_sorted = sorted(REs, key=lambda e: result_mcs[e])
+
+    # result = {e: result_mcs[e] for e in REs_sorted}
+
+    r = []
+    for e in REs:
+        for site in result_mcs[e]:
+            r.append((str(e), site, "blunt" if e.is_blunt() else e.elucidate(), ' '.join(e.suppl)))
+
+    r.sort(key=lambda i: i[1])
+
+    return r
+
+
+def html_format(REs):
+    return  # [f'{str(e):<10s} { "blunt" if e.is_blunt() else e.elucidate()}' for e in REs]
 
 
 if __name__ == "__main__":
@@ -42,4 +58,4 @@ if __name__ == "__main__":
     goi = 'CGATCTACCATCTACTCGCCCGGGATCTGTGAATGAGGAATTACCAGAAACCGAACCCGAAGATAATGATGAGTTGCCTGAAACAGAACCTGAAAGCGATTCCGATAAACCTACCGTAACCTCGAATAAAACAGAAAACCAAGTTGCTGATGAAGATTATGATTCATTCGACGATTTTGTGCCCAGTCAAACACACACAGCCTCCAAAATACCTGTAAAAAATAAACGAGCCAAAAAGTGCACTGTAGAATCTGATTCATCATCTTCGGATGATT'
     mcs = 'gagaccacaacggtttccctctagaaataattttgtttaactttaagaaggagatataccatggcacatatgagcggccgcgtcgactcgagcgagctcccggggggggttct'  # input('MCS? ')
 
-    REsearch(mcs=mcs, goiFile=goiFile)
+    print(REsearch(mcs=mcs, goiFile=goiFile))
