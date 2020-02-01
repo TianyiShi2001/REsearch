@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<ul>
+    {% for e in REs %}
+    <li><code><pre>{{ e }}</pre></code></li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

@@ -1,0 +1,133 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>upload</title>
+    <meta charset="utf-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="https://swissmodel.expasy.org/static/css/bootstrap-3.3.7.min.css" f
+        media="screen,print">
+    <link rel="stylesheet" type="text/css" href="https://swissmodel.expasy.org/static/css/bootstrap-theme-3.3.7.min.css"
+        media="screen,print">
+    <link rel="stylesheet" type="text/css" href="https://swissmodel.expasy.org/static/css/master.css?v=1576743982"
+        media="all">
+    <link rel="stylesheet" type="text/css"
+        href="https://swissmodel.expasy.org/static/fancybox-2.1.4/jquery.fancybox.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://swissmodel.expasy.org/static/jquery-ui-1.11.2.custom/jquery-ui.min.css">
+    <link rel="shortcut icon" href="https://swissmodel.expasy.org/static/images/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="https://swissmodel.expasy.org/static/images/apple-touch-57.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="https://swissmodel.expasy.org/static/images/apple-touch-72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="https://swissmodel.expasy.org/static/images/apple-touch-114.png">
+    <style>
+        #inputForm .formHelp {
+            font-size: .8em;
+            font-style: italic
+        }
+
+        textarea {
+            font-family: "Courier New", Courier, monospace;
+            margin-bottom: 0px;
+        }
+
+        .notfresh {
+            color: #900;
+        }
+
+        .stale {
+            font-weight: bold;
+            color: #F00;
+            background-color: rgba(255, 0, 0, .2)
+        }
+
+        .example_div {
+            width: 540px;
+            border: 1px solid #CCC;
+            padding: 4px;
+            border-radius: 6px 6px 6px 6px;
+        }
+
+        .example_button {
+            width: 160px;
+            padding: 8px;
+        }
+
+        .btn-group>.dropdown-toggle {
+            padding: 8px;
+        }
+
+        @media (max-width: 950px) {
+            img {
+                border: 0 none;
+                max-width: 100%;
+            }
+        }
+
+    </style>
+    <link rel="stylesheet" href="{% static 'css/fileupload.css' %}">
+</head>
+
+<body>
+    <div class="row"
+        style="background-color:#FFF; border-collapse:separate; border:1px solid #DDD; border-radius: 10px; padding:30px;margin: 50px">
+        <div class="col-sm-12">
+            <h4>Restriction Site Finder <a class="smng-help" href="#">
+                    <icon class="glyphicon glyphicon-question-sign"></icon>
+                </a></h4>
+        </div>
+        <div class="col-sm-12">
+            <form style="margin:0px" id="inputForm" enctype="multipart/form-data" method="post" action="/upload/"
+                autocomplete="off">
+                {% csrf_token %}
+                <div id="mcs">
+                    <div class="row" id="targetInputRow">
+                        <div class="col-sm-2">Cloning site sequence:
+                            <br><span class="formHelp">Format must be FASTA, or SnapGene (.dna)</span></div>
+                        <div class="col-sm-10">
+                            <!-- MCS SEQ -->
+                            <textarea name="mcs" rows="6"
+                                placeholder="Paste your target sequence or upload a file using the button below"
+                                cols="40" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="row" id="goiFileUploadRow">
+                        <div class="col-sm-10 col-sm-offset-2">
+                            <!-- MCS FILE -->
+                            <input id="id_sequence_file_upload" type="file" name="mcsFile">
+                        </div>
+                    </div>
+                </div>
+                <div id="goi">
+                    <div class="row" id="targetInputRow">
+                        <div class="col-sm-2">GOI sequence:
+                            <br><span class="formHelp">Format must be FASTA, or SnapGene (.dna)</span></div>
+                        <div class="col-sm-10">
+                            <!-- GOI SEQ -->
+                            <textarea name="goi" rows="6"
+                                placeholder="Paste your target sequence or upload a file using the button below"
+                                cols="40" class="form-control"></textarea></div>
+                    </div>
+                    <div class="row" id="goiFileUploadRow">
+                        <div class="col-sm-10 col-sm-offset-2">
+                            <!-- GOI FILE -->
+                            <input id="id_sequence_file_upload" type="file" name="goiFile">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-10" style="padding-top:8px;"><button id="buildButton" type="submit"
+                            class="btn btn-block btn-lg btn-primary">Find Restriction
+                            Sites</button></div>
+                    <div class="col-sm-10 col-sm-offset-2" style="margin-top:20px; font-style:italic; font-size:12px;">
+                        Created by <a href="https://tianyishi2001.github.io/ox">Tianyi Shi</a></div>
+                </div>
+            </form>
+        </div><!-- End of left column -->
+    </div>
+</body>
+
+</html>
